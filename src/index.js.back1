@@ -1,0 +1,24 @@
+const { AdaptiveCards } = require("@microsoft/adaptivecards-tools");
+const  WebhookTarget = require("./webhookTarget");
+const template = require("./notification-github.json");
+
+/**
+ * Fill in your incoming webhook url.
+ */
+// const webhookUrl = "<webhook-url>"
+const webhookUrl = "https://prod2-16.koreacentral.logic.azure.com:443/workflows/0261443379d541a1a5b50fc7e111f612/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=N85uyAIKC4DfcerUTvnNR-x7OQhKm5VZd-GGnB7POzA"
+const webhookTarget = new WebhookTarget(new URL(webhookUrl));
+
+/**
+ * Send adaptive cards.
+ */
+webhookTarget.sendAdaptiveCard(
+    AdaptiveCards.declare(template).render(
+        {
+            "title": "New Event Occurred!",
+            "appName": "Contoso App",
+            "description": "Detailed description of what happened so the user knows what's going on.",
+            "notificationUrl" : "https://www.adaptivecards.io/"
+        }))
+    .then(() => console.log("Send adaptive card successfully."))
+    .catch(e => console.log(`Failed to send adaptive card. ${e}`));
