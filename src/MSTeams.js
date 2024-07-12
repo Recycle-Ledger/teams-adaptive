@@ -260,9 +260,9 @@ class MSTeams {
         //         }
         //     ]
         // };
-        if (changelog) {
-            payload.text = changelog
-        }
+        // if (changelog) {
+        //     payload.text = changelog
+        // }
         if (overwrite !== '') {
             return merge(
                 payload,
